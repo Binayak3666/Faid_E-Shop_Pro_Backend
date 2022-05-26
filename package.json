@@ -1,0 +1,22 @@
+{
+  "name": "ecomprobackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Binayak3666/EcomProBackend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Binayak3666/EcomProBackend/issues"
+  },
+  "homepage": "https://github.com/Binayak3666/EcomProBackend#readme",
+  "dependencies": {
+    "prettier": "^2.6.2"
+  }
+}

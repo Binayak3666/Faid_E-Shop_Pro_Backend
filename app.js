@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 
 require('dotenv/config');
+
 const api = process.env.API_URL;
+
+// middleware
+app.use(express.json())
 
 app.get(`${api}+/products`, (req, res, next)=>{
     const product = {
@@ -11,6 +15,11 @@ app.get(`${api}+/products`, (req, res, next)=>{
         image:"some Url"
     }
     res.send(product)
+})
+app.post(`${api}+/products`, (req, res, next)=>{
+    const newProduct = req.body;
+    console.log(newProduct)
+    res.send(newProduct)
 })
 
 app.listen(3030,()=>{

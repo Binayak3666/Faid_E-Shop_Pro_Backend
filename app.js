@@ -4,12 +4,15 @@ const app = express();
 require('dotenv/config');
 const api = process.env.API_URL;
 
-//http://localhost:3030/api/v1/products
-app.get('/', (req, res, next)=>{
-    res.send('hello Api')
+app.get(`${api}+/products`, (req, res, next)=>{
+    const product = {
+        id:1,
+        name:"hair Dresser",
+        image:"some Url"
+    }
+    res.send(product)
 })
 
 app.listen(3030,()=>{
-    console.log(api)
     console.log("server is starting now in http://localhost:3030");
 })

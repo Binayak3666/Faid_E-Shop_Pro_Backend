@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const { stringify } = require('nodemon/lib/utils');
+
+// const {Product} = require('./models/product')
+const Product = require('./models/product')
 
 require('dotenv/config');
 
@@ -11,15 +13,7 @@ const api = process.env.API_URL;
 // middleware
 app.use(express.json())
 app.use(morgan('tiny'))
-const productSchema = mongoose.Schema({
-  name: String,
-  image: String,
-  countInStock: {
-    type:Number,
-    required: true 
-  }
-});
-const Product = mongoose.model('Product',productSchema)
+
 
 mongoose.connect(process.env.CONNECTION_STRING)
   .then(() => {

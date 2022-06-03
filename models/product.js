@@ -7,5 +7,9 @@ const productSchema = mongoose.Schema({
       required: true 
     }
   });
+module.exports = mongoose.model('Product',productSchema);
+
+
 // exports.Product = mongoose.model('Product',productSchema)
-module.exports = mongoose.model('Product',productSchema)
+// export in the router js like
+// const {Product} = mongoose.model('Product',productSchema)

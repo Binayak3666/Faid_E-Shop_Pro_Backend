@@ -8,7 +8,15 @@ router.get(`/`, async (req, res) =>{
     if(!categoryList) {
         res.status(500).json({success: false})
     } 
-    res.send(categoryList);
+    res.status(200).send(categoryList);
+})
+
+router.get('/:id', async (req, res)=>{
+    const category = await Category.findById(req.params.id);
+    if(category){
+        res.status(200).json({success:true, data:category})
+    }
+     
 })
 
 router.post('/',async (req, res)=>{
@@ -17,11 +25,6 @@ router.post('/',async (req, res)=>{
         icon: req.body.icon,
         color: req.body.color
     })
-    //one way to create
-    // category = await category.save()
-    // !category?res.status(404).send('category did\'t created!'):res.status(200).json({message: 'data insert successfully', data:category})     
-    
-    //second way to create
     category.save().then((resData)=>{
         res.status(200).json({
             message: 'data insert successfully',

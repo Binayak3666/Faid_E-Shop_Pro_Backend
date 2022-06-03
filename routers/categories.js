@@ -38,6 +38,22 @@ router.post('/',async (req, res)=>{
     })    
 })
 
+router.put('/:id', async(req,res)=>{
+    const category = await Category.findByIdAndUpdate(
+        req.params.id,
+        {
+            name: req.body.name,
+            icon: req.body.icon,
+            color: req.body.color 
+        },
+        {new:true}
+    )
+    if(!category) {
+        res.status(500).json({success: false})
+    } 
+    res.status(200).send(category);
+})
+
 router.delete('/:id',(req,res)=>{
     Category.findByIdAndDelete(req.params.id).then((category)=>{
         if(category){

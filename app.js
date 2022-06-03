@@ -4,7 +4,8 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 // const {Product} = require('./models/product')
-const Product = require('./models/product')
+const productsRoute = require('./routers/products')
+
 
 require('dotenv/config');
 
@@ -24,26 +25,7 @@ mongoose.connect(process.env.CONNECTION_STRING)
   });
 
 
-
-app.get(`${api}+/products`, async (req, res, next)=>{
-    const product = await Product.find();
-    res.send(product)
-})
-app.post(`${api}+/products`, (req, res, next)=>{
-    const product  =new Product({
-      name : req.body.name,
-      image: req.body.image,
-      countInStock: req.body.countInStock
-    }) 
-    product.save().then((createPost =>
-      res.status(200).json(createPost)
-    )).catch((err)=>{
-      res.status(501).json({
-        message: err,
-        success: false
-      })
-    })
-})
+app.use(`${api}+/products`,productsRoute)
 
 
 

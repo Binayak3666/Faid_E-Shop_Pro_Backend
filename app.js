@@ -3,9 +3,6 @@ const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-// all api call reditect to router here
-const productsRoute = require('./routers/products')
-
 // .env file config here
 require('dotenv/config');
 const api = process.env.API_URL;
@@ -14,8 +11,17 @@ const api = process.env.API_URL;
 app.use(express.json())
 app.use(morgan('tiny'))
 
+// all api call reditect to router here
+const productsRoute = require('./routers/products');
+const categoriesRoute = require('./routers/categories');
+const oredrRoute = require('./routers/orders');
+const userRoute = require('./routers/users')
+
 // api goes here
 app.use(`${api}+/products`,productsRoute)
+app.use(`${api}+/categories`,categoriesRoute)
+app.use(`${api}+/orders`,oredrRoute)
+app.use(`${api}+/users`,userRoute)
 
 // mongo connnection 
 mongoose.connect(process.env.CONNECTION_STRING)

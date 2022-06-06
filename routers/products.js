@@ -7,7 +7,11 @@ const mongoose = require('mongoose')
 
 
 router.get('/', async (req, res, next)=>{
-    const product = await Product.find().populate('category');
+    let filter ={}
+    if(req.query.categories){
+      filter = {category: req.query.categories.split(',')}
+    }
+    const product = await Product.find(filter).populate('category');
     if(!product){
       return res.status(500).send('The product cannot bis not available')
     }

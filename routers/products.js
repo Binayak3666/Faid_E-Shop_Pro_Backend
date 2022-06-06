@@ -4,6 +4,7 @@ const { Category } = require('../models/category');
 const router = express.Router();
 const {Product} = require('../models/product')
 
+
 router.get('/', async (req, res, next)=>{
     const product = await Product.find().populate('category');
     if(!product){
@@ -69,6 +70,18 @@ router.put('/:id', async(req,res)=>{
       res.status(500).json({success: false})
   } 
   res.status(200).send(product);
+})
+
+router.delete('/:id',(req,res)=>{
+  Product.findByIdAndDelete(req.params.id).then((product)=>{
+      if(product){
+          res.status(200).json({success: true ,message:'the product deleted'})
+      }else{
+          res.status(404).json({success:false, message:'product not found'})
+      }
+  }).catch(err =>{
+      res.status(400).json({success: false, message: 'product not not found',error:err})
+  })
 })
 
 module.exports = router

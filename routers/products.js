@@ -2,7 +2,8 @@
 const express = require('express');
 const { Category } = require('../models/category');
 const router = express.Router();
-const {Product} = require('../models/product')
+const {Product} = require('../models/product');
+const mongoose = require('mongoose')
 
 
 router.get('/', async (req, res, next)=>{
@@ -46,6 +47,9 @@ router.post(`/`, async (req, res) =>{
 })
 
 router.put('/:id', async(req,res)=>{
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    return res.status(400).send('Invalid product Id')
+  }
   const category = await Category.findById(req.body.category);
   if(!category) return res.status(400).send('Invalid Category')
 

@@ -5,8 +5,19 @@ const router = express.Router();
 const {Product} = require('../models/product')
 
 router.get('/', async (req, res, next)=>{
-    const product = await Product.find();
-    res.send(product)
+    const product = await Product.find().select('name image -_id');
+    if(!product){
+      return res.status(500).send('The product cannot bis not available')
+    }
+    res.send(product);
+});
+
+router.get('/:id', async (req, res, next)=>{
+  let product = await Product.findById(req.params.id);
+  if(!product){
+    return res.status(500).send('The product cannot bis not available')
+  }
+  res.send(product);
 });
 
 router.post(`/`, async (req, res) =>{
@@ -26,9 +37,7 @@ router.post(`/`, async (req, res) =>{
       numReviews: req.body.numReviews,
       isFeatured: req.body.isFeatured,
   })
-
   product = await product.save();
-
   if(!product) 
   return res.status(500).send('The product cannot be created')
 

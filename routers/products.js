@@ -88,4 +88,12 @@ router.delete('/:id',(req,res)=>{
   })
 })
 
+router.get('/get/count', async (req, res, next)=>{
+  const productCount = await Product.countDocuments();
+  if(!productCount){
+    return res.status(500).send('The product count is not available')
+  }
+  res.send({productCount: productCount});
+});
+
 module.exports = router

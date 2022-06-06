@@ -5,7 +5,7 @@ const router = express.Router();
 const {Product} = require('../models/product')
 
 router.get('/', async (req, res, next)=>{
-    const product = await Product.find().select('name image -_id');
+    const product = await Product.find().populate('category');
     if(!product){
       return res.status(500).send('The product cannot bis not available')
     }
@@ -13,7 +13,7 @@ router.get('/', async (req, res, next)=>{
 });
 
 router.get('/:id', async (req, res, next)=>{
-  let product = await Product.findById(req.params.id);
+  let product = await Product.findById(req.params.id).populate('category');
   if(!product){
     return res.status(500).send('The product cannot bis not available')
   }

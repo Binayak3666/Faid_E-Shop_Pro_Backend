@@ -96,4 +96,13 @@ router.get('/get/count', async (req, res, next)=>{
   res.send({productCount: productCount});
 });
 
+router.get('/get/featured/:count', async (req, res, next)=>{
+  const count = req.params.count ? req.params.count : 0
+  const product = await Product.find({isFeatured:true}).limit(+count)
+  if(!product){
+    return res.status(500).send('The product count is not available')
+  }
+  res.send({product: product});
+});
+
 module.exports = router

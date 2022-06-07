@@ -26,7 +26,7 @@ router.post('/',async (req, res)=>{
     let user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password+'Unknown@js') ,
+        password: bcrypt.hashSync(req.body.password, 10) ,
         phone: req.body.phone,
         isAdmin: req.body.isAdmin,
         street: req.body.street,
@@ -79,6 +79,7 @@ router.put('/:id',async (req, res)=> {
 router.post('/login', async (req,res) => {
     const user = await User.findOne({email: req.body.email});
     const secret = process.env.secret;
+    
     if(!user) {
         return res.status(400).send('The user not found');
     }
@@ -97,12 +98,6 @@ router.post('/login', async (req,res) => {
     }else{
         res.status(400).send('password is wrong')
     }
-
-    
-
-    
-
-    
 })
 
 module.exports =router;

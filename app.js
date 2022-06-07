@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const authJwt = require('./helper/jwt')
+const authJwt = require('./helpers/jwt')
+const errorHandler = require('./helpers/error-handler');
 
 // for cross domain issue
 const cors = require('cors');
@@ -18,6 +19,7 @@ const api = process.env.API_URL;
 app.use(express.json())
 app.use(morgan('tiny'))
 app.use(authJwt())
+app.use(errorHandler)
 
 // all api call reditect to router here
 const productsRoute = require('./routers/products');

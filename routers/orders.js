@@ -12,14 +12,14 @@ router.get(`/`, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const orderItemsIds = req.body.orderItems.map(async orderitems =>{
+    const orderItemsIds = await Promise.all(req.body.orderItems.map(async orderitems =>{
         let newOrderItem =  new OrderItems({
             quantity: orderitems.quantity,
             product: orderitems.product
         })
         newOrderItem = await newOrderItem.save();
         return newOrderItem._id;
-    })
+    }))
     console.log(orderItemsIds)
   let order = new Orders({
     orderItems: orderItemsIds,
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
     totalPrice: req.body.totalPrice,
     user: req.body.user,
   });
-//   order = await order.save();
+  order = await order.save();
 
   if (!order) return res.status(400).send("the order cannot be created!");
 

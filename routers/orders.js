@@ -4,7 +4,7 @@ const router = express.Router();
 const { OrderItems } = require("../models/order-item");
 
 router.get(`/`, async (req, res) => {
-  const orderList = await Orders.find();
+  const orderList = await Orders.find().populate('user', 'name email isAdmin').sort({'dateOrdered':-1});
   if (!orderList) {
     res.status(500).json({ success: false });
   }

@@ -19,6 +19,7 @@ const api = process.env.API_URL;
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(authJwt());
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));//to make public/uploads accessable 
 app.use(errorHandler);
 
 // all api call reditect to router here

@@ -10,40 +10,40 @@ const productSchema = mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
-    required: true
+    required: true,
   },
   countInStock: {
     type: Number,
     required: true,
-    min:0,
-    max:255
+    min: 0,
+    max: 255,
   },
-  rating:{
+  rating: {
     type: Number,
     default: 0,
-    min:0,
-    max:5
+    min: 0,
+    max: 5,
   },
-  numReview:{
+  numReview: {
     type: Number,
     default: 0,
   },
-  isFeatured:{
+  isFeatured: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  dateCreated:{
+  dateCreated: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
 });
 
-productSchema.virtual('id').get(function(){
+productSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-productSchema.set('toJSON',{
-  virtuals:true,
+productSchema.set("toJSON", {
+  virtuals: true,
 });
 
-exports.Product = mongoose.model('Product', productSchema);
+exports.Product = mongoose.model("Product", productSchema);

@@ -11,6 +11,19 @@ router.get(`/`, async (req, res) => {
   res.send(orderList);
 });
 
+router.get(`/:id`, async (req, res) => {
+    const order = await Orders.findById(req.params.id)    
+    .populate('user', 'name email isAdmin')
+    .populate({path:'orderItems',populate:{path:'product',populate:'category'} });//three inner pupulate
+    // .populate('orderItems') //two different populate
+    // .populate({path:'product',populate:'product'})//two inner pupulate
+    
+    if (!order) {
+      res.status(500).json({ success: false });
+    }
+    res.send(order);
+  });
+
 router.post("/", async (req, res) => {
     const orderItemsIds = await Promise.all(req.body.orderItems.map(async orderitems =>{
         let newOrderItem =  new OrderItems({

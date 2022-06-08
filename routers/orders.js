@@ -67,4 +67,20 @@ router.put('/:id', async(req,res)=>{
     res.status(200).send(updateOrderStatus);
 })
 
+router.delete('/:id',(req,res)=>{
+    Orders.findByIdAndDelete(req.params.id).then(async(order)=>{
+        if(order){
+            // here inner collection (orderItems has to delete) delete
+            await order.orderItems.map(async orderitem =>{
+                await OrderItems.findByIdAndRemove(orderitem)
+            })
+            res.status(200).json({success: true ,message:'the order deleted'})
+        }else{
+            res.status(404).json({success:false, message:'order not found'})
+        }
+    }).catch(err =>{
+        res.status(400).json({success: false, message: 'order not not found',error:err})
+    })
+})
+
 module.exports = router;
